@@ -231,19 +231,16 @@
     </footer>
     
     <script>
-
-        // === URL твого Google Apps Script ===
 const scriptURL = "https://script.google.com/macros/s/AKfycbxKNfaC9_LIQgs8uwKqbioBqidie4Tg2ovTeFFCyBTudgJWsKtdg8aYsze9SOkwDhVlkg/exec";
-headers: { "Content-Type": "application/json" }
 
-// === Функція для рендеру корзини ===
+// Функція відображення кошика
 function renderCart() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartContainer = document.getElementById('cart-items');
     const totalContainer = document.getElementById('cart-total');
     cartContainer.innerHTML = '';
 
-    if (cart.length === 0) {
+    if(cart.length === 0) {
         cartContainer.innerHTML = '<p>Кошик порожній 😔</p>';
         totalContainer.textContent = '';
         return;
@@ -270,14 +267,12 @@ function renderCart() {
         `;
         cartContainer.appendChild(cartItem);
 
-        // Оновлення кількості
         cartItem.querySelector(`#qty-${index}`).addEventListener('change', e => {
             item.quantity = parseInt(e.target.value);
             localStorage.setItem('cart', JSON.stringify(cart));
             renderCart();
         });
 
-        // Видалення товару
         cartItem.querySelector('.remove-item').addEventListener('click', () => {
             cart.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(cart));
@@ -288,24 +283,24 @@ function renderCart() {
     totalContainer.textContent = `Загальна сума: ${total} грн`;
 }
 
-// === Кнопка "Оформити замовлення" ===
+// Кнопка "Оформити замовлення"
 document.getElementById('checkout-btn').addEventListener('click', () => {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    if (cart.length === 0) {
+    if(cart.length === 0){
         alert('Кошик порожній!');
         return;
     }
+
     document.getElementById('order-form-container').classList.remove('d-none');
-    document.getElementById('form-total').textContent =
+    document.getElementById('form-total').textContent = 
         `Загальна сума замовлення: ${cart.reduce((sum, item) => sum + item.price * item.quantity, 0)} грн`;
 });
 
-// === Відправка форми на Google Sheets через JSON ===
+// Відправка форми через JSON
 document.getElementById('order-form').addEventListener('submit', function(e){
     e.preventDefault();
-
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    if (cart.length === 0) {
+    if(cart.length === 0){
         alert('Кошик порожній!');
         return;
     }
@@ -328,8 +323,9 @@ document.getElementById('order-form').addEventListener('submit', function(e){
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" }
     })
-    .then(response => {
-        if (response.ok) {
+    .then(response => response.json())
+    .then(res => {
+        if(res.status === "ok"){
             alert('✅ Замовлення успішно оформлено! Дякуємо, що обрали нас 💖');
             localStorage.removeItem('cart');
             renderCart();
@@ -339,18 +335,17 @@ document.getElementById('order-form').addEventListener('submit', function(e){
             alert('❌ Помилка при оформленні замовлення.');
         }
     })
-    .catch(error => {
-        console.error('Помилка!', error.message);
+    .catch(err => {
+        console.error('Помилка!', err);
         alert('⚠️ Помилка при оформленні замовлення. Перевірте підключення.');
     });
 });
 
-// === Кнопка "Відмінити замовлення" ===
+// Кнопка "Відмінити"
 document.getElementById('cancel-order').addEventListener('click', () => {
     document.getElementById('order-form-container').classList.add('d-none');
 });
 
-// === Рендер корзини при завантаженні сторінки ===
 renderCart();
 
     </script>
@@ -360,5 +355,6 @@ renderCart();
 </body>
 
 </html>    
+
 
 
