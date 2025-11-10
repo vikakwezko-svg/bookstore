@@ -1,0 +1,102 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-nav .nav-link {
+    color: #080808 !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #f39c12 !important;
+}
+
+.navbar-collapse .navbar-brand img {
+    max-width: 50px;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card-body {
+    background-color: #fff;
+    text-align: center;
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.card-text {
+    color: #989797;
+    font-size: 1rem;
+}
+
+.card-btns a {
+    margin: 5px;
+}
+
+.card-btns .btn {
+    color: #fff;
+    border-radius: 25px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+.card-btns .btn-outline-dark {
+    background-color: transparent;
+    border: 2px solid #2c3e50;
+}
+
+.card-btns .btn-outline-dark:hover {
+    background-color: #2c3e50;
+    border: 2px solid #2c3e50;
+}
+
+.bg-dark-overlay {
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+}
+
+.card-img-overlay h5 {
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+.card-img-overlay p {
+    font-size: 1.1rem;
+    font-style: italic;
+} 
+
+.btn-group a {
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 25px;
+    background-color: #f7f7f7;
+    color: #fff;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-group a:hover {
+    background-color: #f39c12;
+} 
