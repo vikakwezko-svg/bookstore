@@ -444,7 +444,7 @@ document.getElementById('order-form').addEventListener('submit', function(e){
         payment: document.querySelector('input[name="payment"]:checked')?.value,
         cart
     };
-
+ console.log(orderData);
     document.getElementById('orderData').value = JSON.stringify(orderData);
 
     alert('✅ Ваше замовлення відправляється...');
@@ -472,6 +472,7 @@ renderCart();
 </body>
 
 </html>    
+
 
 
 
