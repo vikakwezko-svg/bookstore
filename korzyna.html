@@ -335,7 +335,7 @@ document.getElementById('order-form').addEventListener('submit', function(e){
  console.log(orderData);
     document.getElementById('orderData').value = JSON.stringify(orderData);
 
-    alert('✅ Ваше замовлення відправляється...');
+    alert('✅ Ваше замовлення оформляється...');
     setTimeout(() => {
         alert('🎉 Замовлення успішно оформлене! Дякуємо 💚');
         localStorage.removeItem('cart');
@@ -360,6 +360,7 @@ renderCart();
 </body>
 
 </html>    
+
 
 
 
