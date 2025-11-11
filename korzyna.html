@@ -318,27 +318,33 @@ document.getElementById('order-form').addEventListener('submit', function(e) {
         cart: cart
     };
 
-    fetch(scriptURL, {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(res => {
-        if (res.status === "ok") {
-            alert('✅ Замовлення успішно оформлено! Дякуємо, що обрали нас 💖');
-            localStorage.removeItem('cart');
-            renderCart();
-            document.getElementById('order-form').reset();
-            document.getElementById('order-form-container').classList.add('d-none');
-        } else {
-            alert('❌ Помилка при оформленні замовлення. Спробуйте ще раз.');
-        }
-    })
-    .catch(err => {
-        console.error('Помилка!', err);
-        alert('⚠️ Помилка при оформленні замовлення. Перевірте підключення або доступ Apps Script.');
-    });
+    document.getElementById("orderForm").addEventListener("submit", function(e) {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const order = {
+    firstName: document.querySelector('[name="firstName"]').value,
+    lastName: document.querySelector('[name="lastName"]').value,
+    middleName: document.querySelector('[name="middleName"]').value,
+    email: document.querySelector('[name="email"]').value,
+    phone: document.querySelector('[name="phone"]').value,
+    city: document.querySelector('[name="city"]').value,
+    delivery: document.querySelector('[name="delivery"]').value,
+    branch: document.querySelector('[name="branch"]').value,
+    payment: document.querySelector('[name="payment"]:checked')?.value,
+    cart
+  };
+
+  document.getElementById("orderData").value = JSON.stringify(order);
+
+  alert("✅ Ваше замовлення відправляється...");
+  setTimeout(() => {
+    alert("🎉 Замовлення успішно оформлене! Дякуємо 💚");
+    localStorage.removeItem("cart");
+    renderCart();
+    document.getElementById('order-form').reset();
+    document.getElementById('order-form-container').classList.add('d-none');
+  }, 1500);
+});
 });
 
 // Кнопка "Відмінити"
@@ -355,6 +361,7 @@ renderCart();
 </body>
 
 </html>    
+
 
 
 
