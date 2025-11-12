@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Bookstore</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="логотип.png" alt="" width="150px" height="70px">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Books
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#"><h6>Categories</h6></a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="roman.html">Любовні романи</a></li>
+                    <li><a class="dropdown-item" href="detektiv.html">Детектив</a></li>
+                    <li><a class="dropdown-item" href="fantastyka.html">Фантастика</a></li>
+                    <li><a class="dropdown-item" href="kidslit.html">Дитяча література</a></li>
+                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="contacts.html">Contacts</a>
+                </li>
+            </div>
+            <a class="nav-link" href="korzyna.html">
+              <img src="./корзина.png" alt="Cart" width="45" height="45">
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row position-relative mt-5 mb-5" style="max-width: 100%; height: 500px; object-fit: cover;">
+            <img src="Бріджертони.png" class="flex-shrink-0 me-3" alt="...">
+            <div>
+                <h1 class="card-title mt-4">Бріджертони</h1>
+                <h5 class="card-text mt-3">410.00 грн</h5>
+                <hr>
+                <p><i>Дафна Бріджертон, четверта з восьми нащадків навдивовижу дружної шляхетної родини, має привітний характер, на противагу більшості чванливих панянок свого віку, тож легко знаходить спільну мову чи не з усіма парубками лондонських верхів. А от цікавої шлюбної пропозиції для своєї старшої доньки віконтеса Бріджертон ніяк не дочекається.</i></p>
+                <p>Саймон Бассет, герцог Гастінґс, недавно повернувся з-за кордону й намагається уникати світського гамору, ба навіть виходів у світ, адже вирішив ніколи не одружуватися. На те в нього є особисті мотиви, спричинені родинною драмою. Знайомство із сестрою найліпшого друга Ентоні Бріджертона відкриває для нього інший шлях. Якщо Дафна погодиться на їхнє вдаване залицяння, Саймон зможе відмовляти матерям юних панянок, котрі завзято прагнуть уваги нежонатого герцога. Натомість Дафна побачить нові перспективи, а її репутація злетить у небеса.</p>
+                <p>Чи спрацює цей план, якщо в жорстокому, блискучому, оповитому плітками світі лондонської еліти правдиве лише одне: кохання не стримати правилами.</p>
+                <a href="roman.html" class="btn btn-outline-dark mb-5">Назад</a>
+                <button class="btn btn-outline-dark mb-5 d-inline add-to-cart"
+                    data-title="Бріджертони"
+                    data-price="410"
+                    data-image="Бріджертони.png">Додати до кошика</button>
+            </div>
+        </div>
+    </div>
+
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script>
+        const buttons = document.querySelectorAll('.add-to-cart');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const title = btn.dataset.title;
+                const price = parseFloat(btn.dataset.price);
+                const image = btn.dataset.image;
+
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                const existing = cart.find(item => item.title === title);
+                if (existing) {
+                    existing.quantity++;
+                } else {
+                    cart.push({ title, price, image, quantity: 1 });
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+                alert(`Книга "${title}" додана у кошик 🛒`);
+            });
+        });
+    </script>
+
+</body>
+
+</html>
