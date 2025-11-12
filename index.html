@@ -41,7 +41,7 @@
 </head>
 <body>
     
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!--<nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html">
                 <img src="логотип.png" alt="" width="150px" height="70px">
@@ -70,17 +70,71 @@
                     <a class="nav-link" href="contacts.html">Contacts</a>
                 </li>
             </div>
-            <!--<div class="collapse navbar-collapse justify-content-end">
-                <a class="navbar-brand" href="korzyna.html">
-                  <img src="./корзина.png" alt="" width="55px" height="60px">
-                </a>
-            </div>-->
             <a class="nav-link" href="korzyna.html">
               <img src="./корзина.png" alt="Cart" width="45" height="45">
             </a>
 
         </div>
-    </nav>
+    </nav>-->
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+
+    <!-- 🔸 ЛОГОТИП -->
+    <a class="navbar-brand" href="index.html">
+      <img src="логотип.png" alt="Bookstore Logo" width="130" height="60">
+    </a>
+
+    <!-- 🔸 БУРГЕР + КОРЗИНА (мобільна версія) -->
+    <div class="d-flex align-items-center">
+      <!-- Корзина, видима тільки на малих екранах -->
+      <a class="nav-link me-2 d-lg-none" href="korzyna.html">
+        <img src="./корзина.png" alt="Cart" width="32" height="32">
+      </a>
+
+      <!-- Кнопка бургер-меню -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+
+    <!-- 🔸 НАВІГАЦІЯ -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" href="index.html">Home</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            Books
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#"><h6>Categories</h6></a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="roman.html">Любовні романи</a></li>
+            <li><a class="dropdown-item" href="detektiv.html">Детектив</a></li>
+            <li><a class="dropdown-item" href="fantastyka.html">Фантастика</a></li>
+            <li><a class="dropdown-item" href="kidslit.html">Дитяча література</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="contacts.html">Contacts</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 🔸 КОРЗИНА (десктопна версія, справа від меню) -->
+    <a class="nav-link d-none d-lg-block" href="korzyna.html">
+      <img src="./корзина.png" alt="Cart" width="40" height="40">
+    </a>
+  </div>
+</nav>
+
 
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -289,6 +343,7 @@
 </body>
 
 </html>
+
 
 
 
