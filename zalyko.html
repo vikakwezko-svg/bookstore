@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Bookstore</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="логотип.png" alt="" width="150px" height="70px">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Books
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#"><h6>Categories</h6></a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="roman.html">Любовні романи</a></li>
+                    <li><a class="dropdown-item" href="detektiv.html">Детектив</a></li>
+                    <li><a class="dropdown-item" href="fantastyka.html">Фантастика</a></li>
+                    <li><a class="dropdown-item" href="kidslit.html">Дитяча література</a></li>
+                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="contacts.html">Contacts</a>
+                </li>
+            </div>
+            <a class="nav-link" href="korzyna.html">
+              <img src="./корзина.png" alt="Cart" width="45" height="45">
+            </a>
+        </div>
+    </nav>
+
+  <div class="container">
+        <div class="d-flex flex-column flex-md-row position-relative mt-5 mb-5" style="max-width: 100%; height: 500px; object-fit: cover;">
+            <img src="Залишся якщо кохаєш.png" class="flex-shrink-0 me-3" alt="...">
+            <div>
+                <h1 class="card-title mt-4">Залишся якщо кохаєш</h1>
+                <h5 class="card-text mt-3">360.00 грн</h5>
+                <hr>
+                <p>Коли Атлас обійняв Лілі під час випадкової зустрічі, вона раптом неначе повернулася до життя. Вони відчули, що хочуть бути разом. Але як на ці стосунки відреагує Райлі, який вважає Атласа винним у їхньому з Лілі розлучені? Жінка опиняється поміж двох чоловіків, одного з яких не може втратити, бо він батько їхньої доньки, а другому давно належить її серце. Та коли Атлас запрошує Лілі на побачення, вона погоджується, адже вважає, що заслуговує на щастя.</p>
+                <p>Життя не може складатися лише з роботи, судових позовів та функціонування в режимі зомбі. Але хай би якою рішучою вона була, їй доведеться захищати- не лише себе, а й Еммі. Лілі треба перервати цикл домашнього насильства. Не вона понівечила Райлі, однак вона має залишитися цілісною заради дитини. Заради себе.</p>
+                <p><i>Продовження нашумілої книжки «Покинь, якщо кохаєш...» буквально випросили фанати — закидували пошту листами, створювали онлайн-петиції, зверталися напряму… І Гувер таки «здалася» та порушила свої принципи не писати під впливом ззовні.</i></p>
+                <a href="roman.html" class="btn btn-outline-dark mb-5">Назад</a>
+                <button class="btn btn-outline-dark mb-5 d-inline add-to-cart"
+                    data-title="Залишся якщо кохаєш"
+                    data-price="360"
+                    data-image="Залишся якщо кохаєш.png">Додати до кошика</button>
+            </div>
+        </div>
+    </div>
+
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script>
+        const buttons = document.querySelectorAll('.add-to-cart');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const title = btn.dataset.title;
+                const price = parseFloat(btn.dataset.price);
+                const image = btn.dataset.image;
+
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                const existing = cart.find(item => item.title === title);
+                if (existing) {
+                    existing.quantity++;
+                } else {
+                    cart.push({ title, price, image, quantity: 1 });
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+                alert(Книга "${title}" додана у кошик 🛒);
+            });
+        });
+    </script>
+
+</body>
+
+</html>
