@@ -642,7 +642,20 @@ document.getElementById('cancel-order').addEventListener('click', () => {
 });
 
 // Запуск
-loadCurrencyList();    
+loadCurrencyList();   
+
+const currencySearchInput = document.getElementById('currency-search');
+const currencySelect = document.getElementById('currency-select');
+
+currencySearchInput.addEventListener('input', () => {
+    const searchValue = currencySearchInput.value.toUpperCase();
+    for (const option of currencySelect.options) {
+        if (option.value === "") continue; // Пропускаємо placeholder
+        option.hidden = !option.value.includes(searchValue);
+    }
+});
+
+       
 renderCart();
 </script>
 
@@ -652,6 +665,7 @@ renderCart();
 </body>
 
 </html>    
+
 
 
 
