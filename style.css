@@ -104,23 +104,47 @@ body {
 
 .converter-row {
     display: flex;
-    flex-wrap: nowrap; /* ❗ Забороняємо перенос */
+    flex-wrap: nowrap;
     align-items: center;
-    gap: 8px; /* Відступи між елементами */
-    overflow-x: auto; /* ❗ Якщо дуже мало місця – зʼявиться горизонтальна прокрутка */
+    gap: 6px;
 }
 
+.converter-row span,
+.converter-row label,
 .converter-row select,
-.converter-row button,
+.converter-row button {
+    flex-shrink: 1;       /* дозволяє елементам стискатися */
+    min-width: 0;         /* щоб flex-shrink працював */
+}
+
 .converter-row span {
-    white-space: nowrap; /* ❗ Текст не переносимо */
-    flex-shrink: 1; /* Елементи можуть стискатися */
+    font-size: 1rem;      /* можна зменшувати для малих екранів */
+    flex: 1 1 auto;       /* займає доступне місце */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .converter-row select {
-    min-width: 80px; /* Щоб не став зовсім маленьким */
+    width: auto;
+    max-width: 100px;     /* обмежує ширину випадаючого списку */
 }
 
 .converter-row button {
-    flex-shrink: 0; /* Кнопка зберігає розмір */
+    flex-shrink: 0;       /* кнопка зберігає розмір */
+}
+
+/* Додатково для мобільних */
+@media (max-width: 400px) {
+    .converter-row span {
+        font-size: 0.9rem;
+    }
+
+    .converter-row select {
+        max-width: 70px;
+    }
+
+    .converter-row button {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.85rem;
+    }
 }
