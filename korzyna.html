@@ -81,29 +81,19 @@
         <div id="cart-items"></div>
         <!--<div id="cart-total" class="mt-4 fs-5 fw-bold"></div>
         <button id="checkout-btn" class="btn btn-success mt-3">Оформити замовлення</button>-->
-       <div class="mt-4 p-3 border rounded shadow-sm"> 
-    <div class="d-flex align-items-center mb-3 flex-wrap">
-        <!-- Поле для відображення суми в UAH -->
-        <span class="fs-5 me-2 fw-semibold" id="converter-base-amount">0.00 грн</span> 
-
-        <!-- Підпис -->
-        <label for="currency-select" class="form-label mb-0 me-2">в</label> 
-
-        <!-- Поле пошуку валюти -->
-        <input type="text" id="currency-search" class="form-control w-auto me-2 mb-2 mb-sm-0" placeholder="Пошук валюти...">
-
-        <!-- Випадаючий список валют -->
-        <select class="form-select w-auto me-3" id="currency-select"> 
-            <option value="" disabled selected>Оберіть валюту</option> 
-        </select> 
-
-        <!-- Кнопка конвертації -->
-        <button id="convert-btn" class="btn btn-secondary mb-2 mb-sm-0">Конвертувати</button> 
-    </div> 
-
-    <!-- Результат конвертації -->
-    <div id="converted-total" class="fs-5 fw-bold text-success"></div>
-</div>
+       <div id="cart-total" class="mt-4 fs-5 fw-bold"></div> 
+        <div class="mt-4 p-3 border rounded shadow-sm"> 
+            <div class="d-flex align-items-center mb-3"> 
+                <span class="fs-5 me-2 fw-semibold" id="converter-base-amount">0.00 грн</span> 
+                <label for="currency-select" class="form-label mb-0 me-2">в</label> 
+                <select class="form-select w-auto me-3" id="currency-select"> 
+                    <option value="" disabled selected>Оберіть валюту</option> 
+                </select> 
+                <button id="convert-btn" class="btn btn-secondary">Конвертувати</button> 
+            </div> 
+            <div id="converted-total" class="fs-5 fw-bold text-success"></div> 
+        </div> 
+        <button id="checkout-btn" class="btn btn-success mt-3">Оформити замовлення</button>
 
 
 
@@ -674,6 +664,7 @@ renderCart();
 </body>
 
 </html>    
+
 
 
 
