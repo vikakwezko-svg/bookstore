@@ -81,23 +81,18 @@
         <div id="cart-items"></div>
         <!--<div id="cart-total" class="mt-4 fs-5 fw-bold"></div>
         <button id="checkout-btn" class="btn btn-success mt-3">Оформити замовлення</button>-->
-        <div id="cart-total" class="mt-4 fs-5 fw-bold"></div>
-        <div class="row align-items-center mt-3 mb-4">
-            <div class="col-auto">
-                <label for="currency-select" class="form-label mb-0 fw-semibold">Конвертувати в:</label>
-            </div>
-            <div class="col-auto">
-                <select class="form-select" id="currency-select">
-                    <option value="UAH" selected>UAH (Гривня)</option>
-                    <option value="USD">USD (Долар США)</option>
-                    <option value="EUR">EUR (Євро)</option>
-                    </select>
-            </div>
-            <div class="col-12 mt-2">
-                <div id="converted-total" class="fs-6 text-muted"></div>
-            </div>
-        </div>
-        <button id="checkout-btn" class="btn btn-success mt-3">Оформити замовлення</button>
+        <div class="mt-4 p-3 border rounded shadow-sm">
+            <div class="d-flex align-items-center mb-3">
+                <span class="fs-5 me-2 fw-semibold">220.00 грн</span>
+                <label for="currency-select" class="form-label mb-0 me-2">в</label>
+                <select class="form-select w-auto me-3" id="currency-select">
+                    <option value="UAH" selected>UAH</option>
+                </select>
+                <button id="convert-btn" class="btn btn-secondary">Конвертувати</button>
+            </div>
+    
+            <div id="converted-total" class="fs-5 fw-bold text-success"></div>
+        </div>
 
         <div id="order-form-container" class="d-none mt-4">
             <div class="card shadow p-4 rounded-3">
@@ -373,43 +368,44 @@ renderCart();
 // Глобальні змінні для зберігання фінальної суми та валюти
 let currentTotalAmount = 0;
 let currentCurrency = 'UAH';
+let allCurrencies = {}; // Для зберігання повного списку валют
 
-// ** Функція для отримання курсу валют через API **
-async function getExchangeRate(fromCurrency, toCurrency) {
-    if (fromCurrency === toCurrency) return 1;
+// API Key (якщо потрібен для іншого API). Для Exchangerate-API він не потрібен.
+const API_URL = 'https://open.er-api.com/v6/latest/UAH'; 
 
-    // Використовуємо Free Currency API (наприклад, exchangerate.host)
-    // УВАГА: Надійність та доступність цього API може змінюватися.
-    const apiUrl = `https://api.exchangerate.host/latest?base=${fromCurrency}&symbols=${toCurrency}`;
-
+// ** Функція для завантаження повного списку валют **
+async function loadCurrencyList() {
+    const select = document.getElementById('currency-select');
     try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        const response = await fetch(API_URL);
         const data = await response.json();
-        const rate = data.rates[toCurrency];
-        if (!rate) {
-             throw new Error(`Rate for ${toCurrency} not found.`);
+        
+        if (data.result === 'success') {
+            allCurrencies = data.rates;
+            
+            // Очищаємо список перед заповненням
+            select.innerHTML = '<option value="" disabled selected>Оберіть валюту</option>'; 
+            
+            // Заповнюємо <select>
+            for (const code in allCurrencies) {
+                const option = document.createElement('option');
+                option.value = code;
+                option.textContent = code; // Можна додати назву валюти, якщо API її повертає
+                select.appendChild(option);
+            }
         }
-        return rate;
     } catch (error) {
-        console.error("Помилка отримання курсу валют, використовуються фіксовані курси:", error);
-        // Фіксовані/умовні курси у разі помилки (для демонстрації)
-        if (fromCurrency === 'UAH' && toCurrency === 'USD') return 0.025; // Приблизно 40.00 грн за USD
-        if (fromCurrency === 'UAH' && toCurrency === 'EUR') return 0.023; // Приблизно 43.47 грн за EUR
-        return 1; 
+        console.error("Помилка завантаження списку валют:", error);
+        select.innerHTML = '<option value="UAH" selected>UAH</option><option value="USD">USD</option><option value="EUR">EUR</option>';
     }
 }
 
-
-// ** Оновлена функція рендерингу кошика **
+// ** Асинхронна функція для рендерингу кошика **
 async function renderCart() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartContainer = document.getElementById('cart-items');
     const totalContainer = document.getElementById('cart-total');
     const convertedContainer = document.getElementById('converted-total');
-    const currencySelect = document.getElementById('currency-select');
     const formTotalElement = document.getElementById('form-total'); 
     
     cartContainer.innerHTML = '';
@@ -426,7 +422,8 @@ async function renderCart() {
 
     cart.forEach((item, index) => {
         totalUAH += item.price * item.quantity;
-
+        // ... (ваш код для відображення елементів кошика) ...
+        
         const cartItem = document.createElement('div');
         cartItem.classList.add('d-flex', 'align-items-center', 'mb-3', 'border-bottom', 'pb-3');
         cartItem.innerHTML = `
@@ -447,48 +444,97 @@ async function renderCart() {
         cartItem.querySelector(`#qty-${index}`).addEventListener('change', e => {
             item.quantity = parseInt(e.target.value);
             localStorage.setItem('cart', JSON.stringify(cart));
+            // При зміні кількості скидаємо конвертовану суму
+            currentTotalAmount = totalUAH;
+            currentCurrency = 'UAH';
+            convertedContainer.textContent = '';
             renderCart();
         });
 
         cartItem.querySelector('.remove-item').addEventListener('click', () => {
             cart.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(cart));
+            // При видаленні товару скидаємо конвертовану суму
+            currentTotalAmount = totalUAH;
+            currentCurrency = 'UAH';
+            convertedContainer.textContent = '';
             renderCart();
         });
     });
 
     totalContainer.textContent = `Загальна сума: ${totalUAH.toFixed(2)} грн`;
 
-    // ** Логіка конвертації та оновлення глобальних змінних **
-    const targetCurrency = currencySelect.value;
-    
-    // Встановлюємо початкові значення (UAH)
-    currentTotalAmount = totalUAH;
-    currentCurrency = 'UAH';
-    convertedContainer.textContent = ''; // Очищаємо, якщо UAH
-
-    if (targetCurrency !== 'UAH') {
-        const rate = await getExchangeRate('UAH', targetCurrency);
-        const convertedAmount = totalUAH * rate;
-        
-        convertedContainer.textContent = `(Конвертована сума: ${convertedAmount.toFixed(2)} ${targetCurrency})`;
-        
-        // Оновлюємо глобальні змінні на конвертовану суму та валюту
-        currentTotalAmount = convertedAmount;
-        currentCurrency = targetCurrency;
+    // Оновлюємо відображення загальної суми у формі
+    // Використовуємо поточні глобальні значення (початково - UAH)
+    if (formTotalElement) {
+        formTotalElement.textContent = `Загальна сума замовлення: ${currentTotalAmount.toFixed(2)} ${currentCurrency}`;
     }
     
-    // Оновлення загальної суми у формі замовлення
+    // Оновлюємо поле вводу суми в конвертері
+    const converterTotal = document.querySelector('.mt-4 .fs-5');
+    if (converterTotal) {
+         converterTotal.textContent = `${totalUAH.toFixed(2)} грн`;
+    }
+}
+
+// ** Функція конвертації, що викликається кнопкою **
+async function handleConvert() {
+    const totalUAH = (JSON.parse(localStorage.getItem('cart')) || []).reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const targetCurrency = document.getElementById('currency-select').value;
+    const convertedContainer = document.getElementById('converted-total');
+    
+    if (!targetCurrency || targetCurrency === 'Оберіть валюту') {
+        convertedContainer.textContent = '❌ Будь ласка, оберіть валюту.';
+        convertedContainer.classList.remove('text-success');
+        convertedContainer.classList.add('text-danger');
+        return;
+    }
+    
+    convertedContainer.textContent = '... Конвертація ...';
+    convertedContainer.classList.remove('text-danger');
+    convertedContainer.classList.add('text-success');
+    
+    if (targetCurrency === 'UAH') {
+        currentTotalAmount = totalUAH;
+        currentCurrency = 'UAH';
+        convertedContainer.textContent = `Загальна сума: ${totalUAH.toFixed(2)} грн`;
+        return;
+    }
+
+    try {
+        // Курс знаходиться у вже завантаженому об'єкті allCurrencies
+        const rate = allCurrencies[targetCurrency];
+        
+        if (!rate) {
+             throw new Error(`Курс для ${targetCurrency} не знайдено.`);
+        }
+        
+        const convertedAmount = totalUAH * rate;
+        
+        // Оновлюємо глобальні змінні
+        currentTotalAmount = convertedAmount;
+        currentCurrency = targetCurrency;
+        
+        convertedContainer.textContent = `Конвертована сума: ${convertedAmount.toFixed(2)} ${targetCurrency}`;
+        
+    } catch (error) {
+        console.error("Помилка конвертації:", error);
+        convertedContainer.textContent = '❌ Помилка: Не вдалося отримати курс.';
+        convertedContainer.classList.remove('text-success');
+        convertedContainer.classList.add('text-danger');
+    }
+    
+    // Оновлюємо загальну суму у формі після конвертації
+    const formTotalElement = document.getElementById('form-total');
     if (formTotalElement) {
         formTotalElement.textContent = `Загальна сума замовлення: ${currentTotalAmount.toFixed(2)} ${currentCurrency}`;
     }
 }
 
-
 // ** Обробники подій **
 
-// 1. Обробник вибору валюти
-document.getElementById('currency-select').addEventListener('change', renderCart);
+// 1. Обробник кнопки "Конвертувати"
+document.getElementById('convert-btn').addEventListener('click', handleConvert);
 
 // 2. Обробник кнопки "Оформити замовлення"
 document.getElementById('checkout-btn').addEventListener('click', async () => {
@@ -498,7 +544,7 @@ document.getElementById('checkout-btn').addEventListener('click', async () => {
         return;
     }
     
-    // Переконаємося, що конвертована сума оновлена перед відображенням форми
+    // Перед оформленням оновлюємо кошик і суму у формі
     await renderCart(); 
     
     if (confirm('Ви впевнені, що хочете оформити замовлення?')) {
@@ -506,7 +552,7 @@ document.getElementById('checkout-btn').addEventListener('click', async () => {
     }
 });
 
-// 3. Обробник форми
+// 3. Обробник форми (Відправка на Apps Script)
 document.getElementById('order-form').addEventListener('submit', function(e){
     e.preventDefault(); 
     
@@ -516,7 +562,7 @@ document.getElementById('order-form').addEventListener('submit', function(e){
         return;
     }
 
-    // Створюємо приховану форму для відправки на Apps Script
+    // ... (Логіка створення прихованої форми) ...
     let hiddenForm = document.getElementById('orderForm');
     if(!hiddenForm){
         hiddenForm = document.createElement('form');
@@ -535,6 +581,7 @@ document.getElementById('order-form').addEventListener('submit', function(e){
     const totalUAH = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     const orderData = {
+        // ... (Ваші поля форми) ...
         firstName: document.getElementById('firstName').value,
         lastName: document.getElementById('lastName').value,
         middleName: document.getElementById('middleName').value,
@@ -545,7 +592,7 @@ document.getElementById('order-form').addEventListener('submit', function(e){
         branch: document.getElementById('branch').value,
         payment: document.querySelector('input[name="payment"]:checked')?.value,
         
-        // 🚀 КЛЮЧОВІ ПОЛЯ для Apps Script:
+        // КЛЮЧОВІ ПОЛЯ: Відправляємо фінальну суму та валюту
         finalAmount: currentTotalAmount.toFixed(2), 
         finalCurrency: currentCurrency, 
         totalUAH: totalUAH.toFixed(2),
@@ -572,15 +619,16 @@ document.getElementById('cancel-order').addEventListener('click', () => {
     document.getElementById('order-form-container').classList.add('d-none');
 });
 
-// Перший запуск при завантаженні сторінки
+// Запуск: Завантажуємо список валют і рендеримо кошик
+loadCurrencyList();
 renderCart();
 </script>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>    
+
 
 
 
