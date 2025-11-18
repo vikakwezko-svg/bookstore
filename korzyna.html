@@ -793,7 +793,7 @@ async function handleConvert() {
     if (formTotalElement) formTotalElement.textContent = `Загальна сума замовлення: ${currentTotalAmount.toFixed(2)} ${currentCurrency}`;
 }
 
-// --- Обробники подій ---
+// --- Обробники ---
 document.getElementById('convert-btn').addEventListener('click', handleConvert);
 
 document.getElementById('checkout-btn').addEventListener('click', () => {
@@ -814,14 +814,14 @@ document.getElementById('order-form').addEventListener('submit', function(e){
         return;
     }
 
-    // --- hidden iframe ---
+    // --- hidden iframe для Apps Script ---
     let hiddenForm = document.getElementById('orderForm');
     if(!hiddenForm){
         hiddenForm = document.createElement('form');
         hiddenForm.id = 'orderForm';
         hiddenForm.target = 'hidden_iframe';
         hiddenForm.method = 'POST';
-        hiddenForm.action = 'https://script.google.com/macros/s/ВАШ_ID/exec'; // ваш Apps Script
+        hiddenForm.action = 'https://script.google.com/macros/s/ВАШ_ID/exec'; // Вставити свій URL Apps Script
         const input = document.createElement('input');
         input.type = 'hidden';
         input.name = 'order';
@@ -870,10 +870,12 @@ renderCart();
 </script>
 
 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>    
+
 
 
 
