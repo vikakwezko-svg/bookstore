@@ -110,20 +110,3 @@ body {
 }
 
 
-    /* Адаптивність конвертера */
-    @media (max-width: 576px) {
-        .currency-converter-flex {
-            flex-direction: column !important;
-            align-items: stretch !important;
-        }
-
-        .currency-converter-flex > * {
-            width: 100% !important;
-            margin-bottom: 10px;
-        }
-
-        .currency-converter-flex button {
-            margin-bottom: 0;
-        }
-    }
-
