@@ -99,4 +99,28 @@ body {
 
 .btn-group a:hover {
     background-color: #f39c12;
-} 
+
+}
+
+.converter-row {
+    display: flex;
+    flex-wrap: nowrap; /* ❗ Забороняємо перенос */
+    align-items: center;
+    gap: 8px; /* Відступи між елементами */
+    overflow-x: auto; /* ❗ Якщо дуже мало місця – зʼявиться горизонтальна прокрутка */
+}
+
+.converter-row select,
+.converter-row button,
+.converter-row span {
+    white-space: nowrap; /* ❗ Текст не переносимо */
+    flex-shrink: 1; /* Елементи можуть стискатися */
+}
+
+.converter-row select {
+    min-width: 80px; /* Щоб не став зовсім маленьким */
+}
+
+.converter-row button {
+    flex-shrink: 0; /* Кнопка зберігає розмір */
+}
