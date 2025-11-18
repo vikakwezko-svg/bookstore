@@ -86,7 +86,6 @@
             <div class="d-flex align-items-center mb-3"> 
                 <span class="fs-5 me-2 fw-semibold" id="converter-base-amount">0.00 грн</span> 
                 <label for="currency-select" class="form-label mb-0 me-2">в</label> 
-                <input type="text" id="currency-search" class="form-control w-auto me-2" placeholder="Пошук валюти...">
                 <select class="form-select w-auto me-3" id="currency-select"> 
                     <option value="" disabled selected>Оберіть валюту</option> 
                 </select> 
@@ -95,7 +94,6 @@
             <div id="converted-total" class="fs-5 fw-bold text-success"></div> 
         </div> 
         <button id="checkout-btn" class="btn btn-success mt-3">Оформити замовлення</button>
-
 
 
 
@@ -643,19 +641,6 @@ document.getElementById('cancel-order').addEventListener('click', () => {
 
 // Запуск
 loadCurrencyList();   
-
-const currencySearchInput = document.getElementById('currency-search');
-const currencySelect = document.getElementById('currency-select');
-
-currencySearchInput.addEventListener('input', () => {
-    const searchValue = currencySearchInput.value.toUpperCase();
-    for (const option of currencySelect.options) {
-        if (option.value === "") continue; // Пропускаємо placeholder
-        option.hidden = !option.value.includes(searchValue);
-    }
-});
-
-       
 renderCart();
 </script>
 
@@ -665,6 +650,7 @@ renderCart();
 </body>
 
 </html>    
+
 
 
 
