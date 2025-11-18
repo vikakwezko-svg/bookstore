@@ -81,24 +81,24 @@
         <div id="cart-items"></div>
         <!--<div id="cart-total" class="mt-4 fs-5 fw-bold"></div>
         <button id="checkout-btn" class="btn btn-success mt-3">Оформити замовлення</button>-->
-        <div id="cart-total" class="mt-4 fs-5 fw-bold"></div>
+        <div class="mt-4 p-3 border rounded shadow-sm">
+    <div class="converter-row mb-3">
+        <span class="fs-5 me-2 fw-semibold" id="converter-base-amount">0.00 грн</span>
 
-<div class="mt-4 p-3 border rounded shadow-sm">
-    <div class="d-flex align-items-center mb-3">
-        <span class="fs-5 me-2 fw-semibold" id="converter-base-amount">0.00 грн</span> 
-        
         <label for="currency-select" class="form-label mb-0 me-2">в</label>
-        
-        <select class="form-select w-auto me-3" id="currency-select">
+
+        <select class="form-select w-auto" id="currency-select">
             <option value="" disabled selected>Оберіть валюту</option>
         </select>
-        
+
         <button id="convert-btn" class="btn btn-secondary">Конвертувати</button>
     </div>
-    
+
     <div id="converted-total" class="fs-5 fw-bold text-success"></div>
 </div>
+
 <button id="checkout-btn" class="btn btn-success mt-3">Оформити замовлення</button>
+
 
         <div id="order-form-container" class="d-none mt-4">
             <div class="card shadow p-4 rounded-3">
@@ -650,6 +650,7 @@ renderCart();
 </body>
 
 </html>    
+
 
 
 
