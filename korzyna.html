@@ -86,6 +86,7 @@
             <div class="d-flex align-items-center mb-3"> 
                 <span class="fs-5 me-2 fw-semibold" id="converter-base-amount">0.00 грн</span> 
                 <label for="currency-select" class="form-label mb-0 me-2">в</label> 
+                <input type="text" id="currency-search" class="form-control w-auto me-2" placeholder="Пошук валюти...">
                 <select class="form-select w-auto me-3" id="currency-select"> 
                     <option value="" disabled selected>Оберіть валюту</option> 
                 </select> 
@@ -643,7 +644,7 @@ document.getElementById('cancel-order').addEventListener('click', () => {
 // Запуск
 loadCurrencyList();
 
-// === ПОШУК ВАЛЮТИ ===
+// Поле пошуку валюти
 const currencySearchInput = document.getElementById('currency-search');
 const currencySelect = document.getElementById('currency-select');
 
@@ -654,6 +655,7 @@ currencySearchInput.addEventListener('input', () => {
         option.style.display = option.value.includes(searchValue) ? 'block' : 'none';
     }
 });
+
        
 renderCart();
 </script>
@@ -664,6 +666,7 @@ renderCart();
 </body>
 
 </html>    
+
 
 
 
