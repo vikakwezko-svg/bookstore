@@ -109,42 +109,21 @@ body {
     gap: 6px;
 }
 
-.converter-row span,
-.converter-row label,
-.converter-row select,
-.converter-row button {
-    flex-shrink: 1;       /* дозволяє елементам стискатися */
-    min-width: 0;         /* щоб flex-shrink працював */
-}
 
-.converter-row span {
-    font-size: 1rem;      /* можна зменшувати для малих екранів */
-    flex: 1 1 auto;       /* займає доступне місце */
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+    /* Адаптивність конвертера */
+    @media (max-width: 576px) {
+        .currency-converter-flex {
+            flex-direction: column !important;
+            align-items: stretch !important;
+        }
 
-.converter-row select {
-    width: auto;
-    max-width: 100px;     /* обмежує ширину випадаючого списку */
-}
+        .currency-converter-flex > * {
+            width: 100% !important;
+            margin-bottom: 10px;
+        }
 
-.converter-row button {
-    flex-shrink: 0;       /* кнопка зберігає розмір */
-}
-
-/* Додатково для мобільних */
-@media (max-width: 400px) {
-    .converter-row span {
-        font-size: 0.9rem;
+        .currency-converter-flex button {
+            margin-bottom: 0;
+        }
     }
 
-    .converter-row select {
-        max-width: 70px;
-    }
-
-    .converter-row button {
-        padding: 0.25rem 0.5rem;
-        font-size: 0.85rem;
-    }
-}
