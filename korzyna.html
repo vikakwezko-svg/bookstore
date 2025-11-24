@@ -289,7 +289,7 @@ async function loadCurrencyList() {
         
         if (data.result === 'success') {
             allCurrencies = data.rates;
-            select.innerHTML = '<option value="" disabled selected>Оберіть валюту</option>'; 
+            select.innerHTML = ''; 
             for (const code in allCurrencies) {
                 const option = document.createElement('option');
                 option.value = code;
@@ -442,8 +442,8 @@ async function handleConvert() {
     const targetCurrency = document.getElementById('currency-select').value;
     const convertedContainer = document.getElementById('converted-total');
     
-    if (totalUAH === 0 || !targetCurrency || targetCurrency === 'Оберіть валюту') {
-        const msg = totalUAH === 0 ? '❌ Кошик порожній.' : '❌ Будь ласка, оберіть валюту.';
+    if (totalUAH == 0 || !targetCurrency || targetCurrency == 'Оберіть валюту') {
+        const msg = totalUAH == 0 ? '❌ Кошик порожній.' : '❌ Будь ласка, оберіть валюту.';
         convertedContainer.textContent = msg;
         convertedContainer.classList.remove('text-success');
         convertedContainer.classList.add('text-danger');
@@ -587,6 +587,7 @@ renderCart();
 </body>
 
 </html>    
+
 
 
 
