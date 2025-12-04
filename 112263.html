@@ -80,7 +80,7 @@
 
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-                const existing = cart.find(item => item.title === title);
+                const existing = cart.find(item => item.title == title);
                 if (existing) {
                     existing.quantity++;
                 } else {
@@ -96,5 +96,6 @@
 </body>
 
 </html>
+
 
 
